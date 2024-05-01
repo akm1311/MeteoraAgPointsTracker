@@ -54,6 +54,18 @@
             margin-top: 50px;
             color: #666;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
@@ -66,6 +78,20 @@
             <button type="submit">Check Points</button>
         </form>
         <div id="result"></div>
+        <table id="summaryTable">
+            <thead>
+                <tr>
+                    <th>Total Points</th>
+                    <th>Points in Last 24 Hours</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="totalPoints">0</td>
+                    <td id="last24hPoints">0</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <footer>Version: 1.0</footer>
@@ -77,19 +103,28 @@
             var resultDiv = document.getElementById("result");
             resultDiv.innerHTML = "";
 
+            var totalPoints = 0;
+            var last24hPoints = 0;
+
             wallets.forEach(function(wallet) {
                 fetch("https://point-api.meteora.ag/points/" + wallet.trim())
                 .then(response => response.json())
                 .then(data => {
-                    var totalPoints = data.total_points;
-                    var last24hPoints = data.last_24h_points;
+                    var walletTotalPoints = data.total_points;
+                    var walletLast24hPoints = data.last_24h_points;
+
+                    totalPoints += walletTotalPoints;
+                    last24hPoints += walletLast24hPoints;
 
                     var walletResult = document.createElement("div");
                     walletResult.innerHTML = "<h2>Wallet: " + wallet.trim() + "</h2>" +
-                                             "<p>Total Points: " + totalPoints + "</p>" +
-                                             "<p>Points in Last 24 Hours: " + last24hPoints + "</p>";
+                                             "<p>Total Points: " + walletTotalPoints + "</p>" +
+                                             "<p>Points in Last 24 Hours: " + walletLast24hPoints + "</p>";
 
                     resultDiv.appendChild(walletResult);
+
+                    document.getElementById("totalPoints").textContent = totalPoints;
+                    document.getElementById("last24hPoints").textContent = last24hPoints;
                 })
                 .catch(error => {
                     resultDiv.innerHTML += "<p>Error fetching data for wallet: " + wallet.trim() + "</p>";
