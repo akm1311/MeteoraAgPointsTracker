@@ -4,15 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wallet Points Checker</title>
+    <style>
+        #container {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 50px auto;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            text-align: center;
+        }
+        label {
+            font-size: 18px;
+        }
+        textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+        }
+        .wallet-result {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
-    <h1>Wallet Points Checker</h1>
-    <form id="walletForm">
-        <label for="wallets">Enter Wallets (one per line):</label><br>
-        <textarea id="wallets" name="wallets" rows="5" cols="30"></textarea><br><br>
-        <button type="submit">Check Points</button>
-    </form>
-    <div id="result"></div>
+    <div id="container">
+        <h1>Wallet Points Checker</h1>
+        <form id="walletForm">
+            <label for="wallets">Enter Wallets (one per line):</label><br>
+            <textarea id="wallets" name="wallets" rows="15" cols="50"></textarea><br><br>
+            <button type="submit">Check Points</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <footer>Version: 1.0</footer>
 
     <script>
         document.getElementById("walletForm").addEventListener("submit", function(event) {
