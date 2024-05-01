@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Points Checker</title>
+</head>
+<body>
+    <h1>Wallet Points Checker</h1>
+    <form id="walletForm">
+        <label for="wallets">Enter Wallets (one per line):</label><br>
+        <textarea id="wallets" name="wallets" rows="5" cols="30"></textarea><br><br>
+        <button type="submit">Check Points</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById("walletForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var wallets = document.getElementById("wallets").value.trim().split("\n");
+            var resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "";
+
+            wallets.forEach(function(wallet) {
+                fetch("https://point-api.meteora.ag/points/" + wallet.trim())
+                .then(response => response.json())
+                .then(data => {
+                    var totalPoints = data.total_points;
+                    var last24hPoints = data.last_24h_points;
+
+                    var walletResult = document.createElement("div");
+                    walletResult.innerHTML = "<h2>Wallet: " + wallet.trim() + "</h2>" +
+                                             "<p>Total Points: " + totalPoints + "</p>" +
+                                             "<p>Points in Last 24 Hours: " + last24hPoints + "</p>";
+
+                    resultDiv.appendChild(walletResult);
+                })
+                .catch(error => {
+                    resultDiv.innerHTML += "<p>Error fetching data for wallet: " + wallet.trim() + "</p>";
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
