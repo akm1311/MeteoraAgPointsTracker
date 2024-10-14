@@ -20,8 +20,15 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         #top-bar {
-            text-align: right;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
+        }
+        #top-bar img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
         }
         #top-bar a {
             color: #1DA1F2;
@@ -99,6 +106,7 @@
 <body>
     <div id="container">
         <div id="top-bar">
+            <img src="logo.png" alt="Logo">
             <a href="https://twitter.com/Aman_Kumar_1311" target="_blank">Follow me on Twitter</a>
         </div>
         <h1>Wallet Points Checker</h1>
